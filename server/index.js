@@ -2,7 +2,10 @@ const app = require('express')();
 const socketio = require('socket.io');
 const http = require('http');
 
+const connectDB = require('./config/db');
 const chatRouter = require('./Routes/api/chatRouter');
+
+connectDB();
 
 const PORT = process.env.PORT || 5000;
 
