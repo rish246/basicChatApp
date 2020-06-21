@@ -1,0 +1,51 @@
+body {
+	margin: 0;
+	padding: 0;
+	font-family: sans-serif;
+	background-color: darkslategray;
+}
+.heading {
+	text-transform: uppercase;
+}
+.createRoomForm {
+	display: flex;
+	flex-direction: column;
+	width: 50vw;
+	height: 50vh;
+
+	text-align: center;
+	margin-left: 25%;
+	margin-top: 10%;
+}
+
+.roomName {
+	height: 50px;
+	width: 80%;
+	border-radius: 5px;
+}
+
+.description {
+	height: 100px;
+	width: 80%;
+	margin-top: 10px;
+	border-radius: 2px;
+}
+
+.inputGroup {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+label {
+	color: white;
+	font-size: medium;
+}
+button {
+	width: 30%;
+	height: 10rem;
+	margin-left: 40%;
+	margin-top: 10px;
+	color: deepskyblue;
+	border-radius: 20px;
+}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
 import './Join.css';
@@ -10,8 +10,24 @@ const Join = () => {
 
 	//work on these onChange handlers
 
+	//write a function that will render the Link to form
+	const renderCreateFormButton = () => {
+		return (
+			<Fragment>
+				<Link to="/create">
+					<button type="submit" className="button mt-0">
+						<h1 className="heading">Create your own room</h1>
+					</button>
+				</Link>
+			</Fragment>
+		);
+	};
+
 	return (
 		<div className="joinOuterContainer">
+			{/* render a link to CreateRoom component */}
+			<div className="createFormLink">{renderCreateFormButton()}</div>
+
 			<div className="joinInnerContainer">
 				<h1 className="heading">Join</h1>
 				<div>
