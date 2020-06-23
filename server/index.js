@@ -4,6 +4,7 @@ const http = require('http');
 
 const connectDB = require('./config/db');
 const chatRouter = require('./Routes/api/chatRouter');
+const roomRouter = require('./Routes/api/roomRouter');
 
 connectDB();
 
