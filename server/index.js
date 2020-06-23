@@ -1,4 +1,4 @@
-const app = require('express')();
+const express = require('express');
 const socketio = require('socket.io');
 const http = require('http');
 
@@ -6,6 +6,7 @@ const connectDB = require('./config/db');
 const chatRouter = require('./Routes/api/chatRouter');
 const roomRouter = require('./Routes/api/roomRouter');
 
+const app = express();
 connectDB();
 
 const PORT = process.env.PORT || 5000;
@@ -29,7 +30,9 @@ io.on('connection', (socket) => {
 	});
 });
 
+app.use(express.json({ extended: true }));
 app.use(chatRouter);
+app.use('/api/room', roomRouter);
 
 server.listen(PORT, () => {
 	console.log(`listening at port number ${PORT}`);
