@@ -13,7 +13,7 @@ const RoomSchema = new Schema({
 		{
 			user: {
 				type: Schema.Types.ObjectId,
-				ref: 'user'
+				ref: 'User'
 			},
 			name: {
 				type: String
@@ -22,4 +22,4 @@ const RoomSchema = new Schema({
 	]
 });
 
-module.exports = Room = mongoose.model('room', RoomSchema);
+module.exports = Room = mongoose.model('Room', RoomSchema);

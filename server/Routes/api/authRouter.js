@@ -48,6 +48,9 @@ router.post(
 				email,
 				password
 			});
+
+			// apply jsonWebToken based authentication for tomorrow
+
 			res.json(user);
 			await user.save();
 		} catch (error) {
