@@ -5,11 +5,16 @@ const http = require('http');
 const connectDB = require('./config/db');
 const chatRouter = require('./Routes/api/chatRouter');
 const roomRouter = require('./Routes/api/roomRouter');
+const authRouter = require('./Routes/api/authRouter');
 
 const app = express();
 connectDB();
 
 const PORT = process.env.PORT || 5000;
+
+app.get('/', (req, res) => {
+	res.send('Server is up and running');
+});
 
 const server = http.createServer(app);
 
@@ -31,7 +36,8 @@ io.on('connection', (socket) => {
 });
 
 app.use(express.json({ extended: true }));
-app.use(chatRouter);
+app.use('/api/chat', chatRouter);
+app.use('/api/auth', authRouter);
 app.use('/api/room', roomRouter);
 
 server.listen(PORT, () => {

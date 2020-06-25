@@ -13,18 +13,18 @@ const UserSchema = new Schema({
 	password: {
 		type: String,
 		required: true
-	},
-	rooms: [
-		{
-			room: {
-				id: Schema.Types.ObjectId,
-				ref: 'room'
-			},
-			name: {
-				type: String
-			}
-		}
-	]
+	}
+	// rooms: [
+	// 	{
+	// 		room: {
+	// 			id: Schema.Types.ObjectId,
+	// 			ref: 'room'
+	// 		},
+	// 		name: {
+	// 			type: String
+	// 		}
+	// 	}
+	// ]
 });
 
 module.exports = User = mongoose.model('user', UserSchema);
