@@ -36,7 +36,7 @@ router.post(
 			let user = await User.findOne({ email });
 
 			if (user) {
-				return res.status(400).json({ error: 'User already exists' });
+				return res.status(400).json({ error: { message: 'User already exists' } });
 			}
 
 			// console.log('Can create account');
@@ -67,6 +67,55 @@ router.post(
 				res.json({ token });
 			});
 			await user.save();
+		} catch (error) {
+			console.error(error);
+			res.status(500).send('Server Error');
+		}
+	}
+);
+
+// @route    POST api/users/signin
+// @desc     loginUser
+// @access   Public
+router.post(
+	'/signin',
+	[
+		check('email').isEmail().withMessage('Email is required'),
+		check('password').exists().withMessage('Password is required')
+	],
+	async (req, res) => {
+		const errors = validationResult(req);
+		if (!errors.isEmpty()) {
+			return res.status(400).json({ errors: errors.array() });
+		}
+
+		///// try to login the user
+		const { email, password } = req.body;
+		try {
+			let user = await User.findOne({ email });
+			if (!user) {
+				return res.status(400).json({ error: { message: 'User does not exist' } });
+			}
+
+			let isMatch = await bcrypt.compare(password, user.password);
+			if (!isMatch) {
+				return res.status(400).json({ error: { message: 'Invalid email or password' } });
+			}
+
+			//generate a jsonWebToken and send to user
+			const payload = {
+				user: {
+					id: user._id
+				}
+			};
+
+			jwt.sign(payload, config.get('jwSecret'), { expiresIn: 3600 }, (err, token) => {
+				if (err) throw err;
+
+				res.json({ token });
+			});
+
+			//match the passwords
 		} catch (error) {
 			console.error(error);
 			res.status(500).send('Server Error');
