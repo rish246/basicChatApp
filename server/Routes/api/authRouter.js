@@ -1,5 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const config = require('config');
 const { check, validationResult } = require('express-validator');
 
 const User = require('../../models/User');
@@ -51,7 +53,19 @@ router.post(
 
 			// apply jsonWebToken based authentication for tomorrow
 
-			res.json(user);
+			//define payload
+			const payload = {
+				user: {
+					id: user._id
+				}
+			};
+
+			//call jwt.sign function
+			jwt.sign(payload, config.get('jwSecret'), { expiresIn: 3600 }, (err, token) => {
+				if (err) throw err;
+
+				res.json({ token });
+			});
 			await user.save();
 		} catch (error) {
 			console.error(error);
@@ -61,3 +75,5 @@ router.post(
 );
 
 module.exports = router;
+
+//generate a jsonwebtoken and send the jsontoken in response
