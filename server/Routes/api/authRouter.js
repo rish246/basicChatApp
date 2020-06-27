@@ -61,7 +61,7 @@ router.post(
 			};
 
 			//call jwt.sign function
-			jwt.sign(payload, config.get('jwSecret'), { expiresIn: 3600 }, (err, token) => {
+			jwt.sign(payload, config.get('jwSecret'), { expiresIn: 36000 }, (err, token) => {
 				if (err) throw err;
 
 				res.json({ token });
@@ -109,7 +109,7 @@ router.post(
 				}
 			};
 
-			jwt.sign(payload, config.get('jwSecret'), { expiresIn: 3600 }, (err, token) => {
+			jwt.sign(payload, config.get('jwSecret'), { expiresIn: 36000 }, (err, token) => {
 				if (err) throw err;
 
 				res.json({ token });

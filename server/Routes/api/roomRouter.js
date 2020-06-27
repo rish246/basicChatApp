@@ -1,6 +1,7 @@
 const express = require('express');
 const { check, validationResult } = require('express-validator');
 const Room = require('../../models/Room');
+const auth = require('../helpers/middlewares/auth');
 
 const router = express.Router();
 
@@ -10,8 +11,11 @@ const router = express.Router();
 router.post(
 	'/create/:name/:description',
 	[
-		check('name').not().isEmpty().withMessage('name should not be empty'),
-		check('description').not().isEmpty().withMessage('description should not be empty')
+		auth,
+		[
+			check('name').not().isEmpty().withMessage('name should not be empty'),
+			check('description').not().isEmpty().withMessage('description should not be empty')
+		]
 	],
 	async (req, res) => {
 		//use validation result to handle validation
