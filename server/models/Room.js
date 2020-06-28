@@ -19,6 +19,22 @@ const RoomSchema = new Schema({
 				type: String
 			}
 		}
+	],
+	Messages: [
+		{
+			from: {
+				type: Schema.Types.ObjectId,
+				ref: 'User'
+			},
+			date: {
+				type: Date,
+				default: Date.now
+			},
+			content: {
+				type: String,
+				required: true
+			}
+		}
 	]
 });
 
