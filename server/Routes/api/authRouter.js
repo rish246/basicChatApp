@@ -1,11 +1,30 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
+const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const { check, validationResult } = require('express-validator');
 
 const User = require('../../models/User');
+const auth = require('../helpers/middlewares/auth');
+const { Mongoose } = require('mongoose');
 const router = express.Router();
+
+// @route    POST api/users
+// @desc     Register user
+// @access   Public
+router.get('/', auth, async (req, res) => {
+	try {
+		let user = await User.findOne({ _id: req.user.id }).select('-password');
+		if (!user) {
+			return res.status(404).json({ error: { message: 'User not found' } });
+		}
+		res.json(user);
+	} catch (error) {
+		console.error(error);
+		res.status(500).send('Server Error');
+	}
+});
 
 // @route    POST api/users
 // @desc     Register user
@@ -61,7 +80,7 @@ router.post(
 			};
 
 			//call jwt.sign function
-			jwt.sign(payload, config.get('jwSecret'), { expiresIn: 36000 }, (err, token) => {
+			jwt.sign(payload, config.get('jwSecret'), { expiresIn: 360000 }, (err, token) => {
 				if (err) throw err;
 
 				res.json({ token });
@@ -109,7 +128,7 @@ router.post(
 				}
 			};
 
-			jwt.sign(payload, config.get('jwSecret'), { expiresIn: 36000 }, (err, token) => {
+			jwt.sign(payload, config.get('jwSecret'), { expiresIn: 360000 }, (err, token) => {
 				if (err) throw err;
 
 				res.json({ token });
